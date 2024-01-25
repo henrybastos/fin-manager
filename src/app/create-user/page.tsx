@@ -10,7 +10,7 @@ import { toast } from 'sonner'
 import { z } from "zod"
 import { useState } from "react"
 import { useRouter } from "next/navigation";
-import { createTable } from "@/lib/repository";
+import { checkAndCreateTable, createUser } from "@/lib/repository";
 
 export default function CreateUser () {
     const { theme } = resolveConfig(tailwindConfigFile);
@@ -42,9 +42,13 @@ export default function CreateUser () {
             return;
         }
 
-        console.log('Success!');
-        await createTable();
-        router.push(`/dashboard?username=Henry`);
+        await checkAndCreateTable();
+        console.log({ username, password });
+        
+        const user = await createUser({ username, password });
+        console.log('New user created:', user);
+        
+        router.push(`/dashboard?username=${username}`);
     }
 
     return (

@@ -13,6 +13,7 @@ export interface Database {
 export interface UserTable {
     id: Generated<number>
     username: string
+    password: string
     created_at: ColumnType<Date, string | undefined, never>
 }
 
